@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/global/Navbar";
-import Footer from "@/components/global/Footer"; // Import the Footer
+import Script from "next/script";
+
+// Import your Navbar and Footer
+import Navbar from "../components/global/Navbar";
+import Footer from "../components/global/Footer"; 
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "VIDA Foundation | Advancing Healthcare Excellence",
-  description: "Professional certification in IPC, CSSD, and Advanced Clinical Care.",
+  title: "VIDA Foundation",
+  description: "Pioneering Healthcare Education",
 };
 
 export default function RootLayout({
@@ -15,13 +21,37 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-white text-zinc-950 flex flex-col min-h-screen">
+      <body className={inter.className}>
+        
+        <div id="google_translate_element" className="hidden"></div>
+        <Script
+          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
+        
+        {/* --- GOOGLE TRANSLATE INIT SCRIPT --- */}
+        <Script id="google-translate-init" strategy="afterInteractive" dangerouslySetInnerHTML={{
+          __html: `
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                // Notice the new codes added here: gu, bn, es
+                includedLanguages: 'en,hi,mr,ta,te,kn,ml,gu,bn,es', 
+                autoDisplay: false
+              }, 'google_translate_element');
+            }
+          `
+        }} />
+
+        {/* TOP: Navbar */}
         <Navbar />
-        {/* flex-grow ensures the footer stays at the bottom even on short pages */}
-        <main className="flex-grow"> 
-          {children}
-        </main>
-        <Footer /> {/* Inject Footer Here */}
+        
+        {/* MIDDLE: Page Content */}
+        {children}
+
+        {/* BOTTOM: Footer */}
+        <Footer />
+        
       </body>
     </html>
   );

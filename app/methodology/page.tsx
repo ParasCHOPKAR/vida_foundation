@@ -16,7 +16,12 @@ import {
   Globe,
   ArrowRight,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  BookOpen,
+  Crown,
+  Settings,
+  Star,
+  PlusCircle
 } from "lucide-react";
 
 if (typeof window !== "undefined") {
@@ -47,6 +52,24 @@ export default function MethodologyPage() {
       stagger: 0.3
     });
 
+    // Course Structure Cards Reveal
+    gsap.fromTo(
+      ".structure-card",
+      { y: 50, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".structure-container",
+          start: "top 80%",
+          toggleActions: "play reverse play reverse",
+        }
+      }
+    );
+
     // 2. Timeline Animations
     mm.add("(min-width: 768px)", () => {
       // Glow line moving down like a progress bar
@@ -68,8 +91,6 @@ export default function MethodologyPage() {
       // Cards bouncing in from sides
       const cards = gsap.utils.toArray<HTMLElement>(".timeline-card");
       cards.forEach((card, i) => {
-        
-        // Card entrance
         gsap.fromTo(
           card,
           { x: i % 2 === 0 ? -80 : 80, autoAlpha: 0, scale: 0.9 },
@@ -132,7 +153,7 @@ export default function MethodologyPage() {
 
     // 3. Bento Certifications Reveal
     gsap.fromTo(
-      ".bento-cert",
+      ".bento-item",
       { y: 60, autoAlpha: 0, scale: 0.95 },
       {
         y: 0,
@@ -142,7 +163,7 @@ export default function MethodologyPage() {
         stagger: 0.15,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: ".cert-container",
+          trigger: ".bento-container",
           start: "top 75%",
           toggleActions: "play reverse play reverse",
         },
@@ -152,11 +173,43 @@ export default function MethodologyPage() {
     return () => mm.revert();
   }, { scope: containerRef });
 
-  // Simplified, student-friendly content
+  // --- DATA ARRAYS ---
+
+  const courseStructures = [
+    {
+      title: "Foundation Courses",
+      desc: "Basic understanding for beginners in healthcare.",
+      icon: BookOpen,
+      color: "text-blue-600",
+      bg: "bg-blue-100"
+    },
+    {
+      title: "Advanced Certification Programs",
+      desc: "Specialized courses in IPC, CSSD, and biomedical fields.",
+      icon: Award,
+      color: "text-[#F28500]",
+      bg: "bg-[#F28500]/10"
+    },
+    {
+      title: "Masterclass Programs",
+      desc: "Expert-level training for supervisors and managers.",
+      icon: Crown,
+      color: "text-purple-600",
+      bg: "bg-purple-100"
+    },
+    {
+      title: "Customized Training Modules",
+      desc: "Tailor-made courses for hospitals and institutions.",
+      icon: Settings,
+      color: "text-emerald-600",
+      bg: "bg-emerald-100"
+    }
+  ];
+
   const methodologySteps = [
     {
       id: "01",
-      title: "Classroom Learning",
+      title: "Interactive Lectures",
       desc: "Learn the basics from our expert teachers in easy-to-follow online and offline classes.",
       bullets: ["Simple study materials", "Helpful videos & pictures", "Ask questions anytime"],
       icon: MonitorPlay,
@@ -165,7 +218,7 @@ export default function MethodologyPage() {
     },
     {
       id: "02",
-      title: "Watch & Learn",
+      title: "Practical Demonstrations",
       desc: "See how real hospital tools and machines work with safe, guided demonstrations.",
       bullets: ["Real hospital labs", "Learn to handle tools safely", "Get helpful tips from experts"],
       icon: Stethoscope,
@@ -174,7 +227,7 @@ export default function MethodologyPage() {
     },
     {
       id: "03",
-      title: "Practice Safely",
+      title: "Simulation-Based Training",
       desc: "Practice your skills on medical dummies in a safe room where it's okay to make mistakes and learn.",
       bullets: ["Lifelike medical dummies", "Practice emergency steps", "Safe, stress-free zone"],
       icon: Activity,
@@ -183,7 +236,7 @@ export default function MethodologyPage() {
     },
     {
       id: "04",
-      title: "Solve Real Problems",
+      title: "Case Studies & Real Scenarios",
       desc: "Look at real-life hospital situations and figure out how to solve them like a pro.",
       bullets: ["Learn from real events", "Find out what went wrong", "Work together in teams"],
       icon: FileText,
@@ -192,20 +245,34 @@ export default function MethodologyPage() {
     },
     {
       id: "05",
-      title: "Test & Graduate",
+      title: "Assessments & Certification",
       desc: "Show what you know in fair tests. Pass them to earn your respected VIDA certificate!",
-      bullets: ["Fair skill checks", "Simple written tests", "Get ready for the job"],
+      bullets: ["Module-wise assessments", "Practical evaluations", "Final certification exam"],
       icon: ClipboardCheck,
       color: "text-zinc-300",
       border: "border-zinc-500/30"
     }
   ];
 
+  const assessments = [
+    "Module-wise assessments",
+    "Practical evaluations",
+    "Case study presentations",
+    "Final certification exam"
+  ];
+
+  const premiumAddons = [
+    "Hospital-based hands-on training",
+    "Internship programs",
+    "International certification alignment",
+    "Research & publication guidance"
+  ];
+
   return (
     <main ref={containerRef} className="min-h-screen bg-[#F4F0E6] text-zinc-950 pt-32 overflow-hidden font-sans">
       
       {/* --- HERO SECTION --- */}
-      <section className="max-w-7xl mx-auto px-6 mb-24 md:mb-40 relative">
+      <section className="max-w-7xl mx-auto px-6 mb-20 relative">
         <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] [background-size:32px_32px] opacity-60 pointer-events-none -z-10" />
         
         <div className="max-w-4xl relative z-10 text-center md:text-left flex flex-col items-center md:items-start">
@@ -219,8 +286,26 @@ export default function MethodologyPage() {
           </h1>
           
           <p className="hero-element text-lg md:text-xl text-zinc-600 font-medium leading-[1.7] max-w-2xl md:border-l-4 md:border-[#DF8618] md:pl-6">
-            We blend classroom learning with real hospital practice. Our simple 5-step path makes it easy to understand, practice safely, and get ready for a real healthcare job.
+            We blend interactive classroom learning with real hospital practice. Our comprehensive structure makes it easy to understand, practice safely, and get ready for a real healthcare job.
           </p>
+        </div>
+      </section>
+
+      {/* --- COURSE STRUCTURE SECTION --- */}
+      <section className="structure-container max-w-7xl mx-auto px-6 mb-24 md:mb-40 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {courseStructures.map((structure, i) => {
+            const Icon = structure.icon;
+            return (
+              <div key={i} className="structure-card bg-white p-8 rounded-3xl shadow-sm border border-[#E8E4D9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className={`w-14 h-14 rounded-2xl ${structure.bg} flex items-center justify-center mb-6`}>
+                  <Icon className={`w-7 h-7 ${structure.color}`} />
+                </div>
+                <h3 className="text-xl font-bold text-[#1C2329] mb-3 leading-tight">{structure.title}</h3>
+                <p className="text-zinc-600 text-sm leading-relaxed">{structure.desc}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -230,9 +315,9 @@ export default function MethodologyPage() {
           
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-6">
-              Your <span className="text-[#F28500]">Learning Path</span>
+              Training <span className="text-[#F28500]">Methodology</span>
             </h2>
-            <p className="text-zinc-400 max-w-xl mx-auto text-lg">Step-by-step training to help you grow from a beginner to a confident healthcare professional.</p>
+            <p className="text-zinc-400 max-w-xl mx-auto text-lg">Step-by-step training combining theory, simulation, and real-world application.</p>
           </div>
 
           {/* Timeline Container */}
@@ -294,30 +379,30 @@ export default function MethodologyPage() {
         </div>
       </section>
 
-      {/* --- BENTO CERTIFICATION SECTION --- */}
+      {/* --- BENTO CERTIFICATION & ASSESSMENT SECTION --- */}
       <section className="bg-[#F4F0E6] py-32 relative overflow-hidden">
-        <div className="cert-container max-w-7xl mx-auto px-6">
+        <div className="bento-container max-w-7xl mx-auto px-6">
           
           <div className="mb-16 text-center md:text-left">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-[#C09263] mb-4">
-              Your Reward
+              Evaluation & Awards
             </h2>
             <h3 className="text-4xl md:text-6xl font-black tracking-tight leading-[1]">
-              <span className="text-[#24405E]">Certificates</span> <br />
-              Hospitals Trust.
+              <span className="text-[#24405E]">Certification</span> & <br className="hidden md:block"/>
+              Recognition.
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            {/* Main Bento Box */}
-            <div className="bento-cert md:col-span-2 bg-[linear-gradient(135deg,#3A5C84_0%,#24405E_100%)] rounded-[2rem] p-10 md:p-14 text-white relative overflow-hidden shadow-xl hover:-translate-y-2 transition-transform duration-500">
+            {/* Main Certification Box (Spans 2 columns on lg) */}
+            <div className="bento-item lg:col-span-2 bg-[linear-gradient(135deg,#3A5C84_0%,#24405E_100%)] rounded-[2rem] p-10 md:p-14 text-white relative overflow-hidden shadow-xl hover:-translate-y-1 transition-transform duration-500">
               <Award className="absolute -right-10 -bottom-10 w-80 h-80 text-white opacity-10 pointer-events-none float-icon" />
-              <div className="relative z-10 max-w-lg">
+              <div className="relative z-10 max-w-xl">
                 <ShieldCheck className="w-14 h-14 text-[#D19D65] mb-6 float-icon" />
-                <h4 className="text-3xl font-bold mb-4">Top Quality Training</h4>
-                <p className="text-white/80 leading-relaxed mb-8 text-lg">
-                  Our training follows strict hospital rules (called NABH standards). This means when you graduate, hospitals know you were taught the right way to keep patients safe.
+                <h4 className="text-3xl font-bold mb-4">VIDA-Certified Credentials</h4>
+                <p className="text-white/80 leading-relaxed mb-8 text-lg font-medium">
+                  Participants receive VIDA-certified credentials that enhance professional credibility and career growth opportunities in hospitals, laboratories, and healthcare organizations globally.
                 </p>
                 <Link href="/programs" className="inline-flex items-center gap-2 bg-[#D19D65] text-[#24405E] px-6 py-3 rounded-full font-bold text-sm hover:bg-white transition-colors shadow-lg">
                   See Our Courses <ArrowRight className="w-4 h-4" />
@@ -325,21 +410,39 @@ export default function MethodologyPage() {
               </div>
             </div>
 
-            {/* Secondary Bento Boxes */}
-            <div className="flex flex-col gap-6 md:col-span-1">
-              
-              <div className="bento-cert flex-1 bg-white border border-[#E8E4D9] rounded-[2rem] p-8 flex flex-col justify-center hover:shadow-xl transition-shadow duration-300 group">
-                <Globe className="w-12 h-12 text-[#24405E] mb-6 group-hover:scale-110 transition-transform" />
-                <h4 className="text-xl font-bold text-[#1C2329] mb-2">Accepted Everywhere</h4>
-                <p className="text-sm text-zinc-600">Your certificate is respected by major hospitals and clinics all over the world.</p>
-              </div>
+            {/* Assessment Structure Box */}
+            <div className="bento-item bg-white border border-[#E8E4D9] rounded-[2rem] p-8 md:p-10 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-300">
+              <ClipboardCheck className="w-12 h-12 text-[#24405E] mb-6" />
+              <h4 className="text-2xl font-bold text-[#1C2329] mb-6">Assessment Structure</h4>
+              <ul className="space-y-4">
+                {assessments.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-zinc-700">
+                    <CheckCircle2 className="w-5 h-5 text-[#DF8618] shrink-0 mt-0.5" />
+                    <span className="font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              <div className="bento-cert flex-1 bg-[linear-gradient(135deg,#DF8618_0%,#C86E04_100%)] text-white rounded-[2rem] p-8 flex flex-col justify-center shadow-lg hover:-translate-y-2 transition-transform duration-300">
-                <ClipboardCheck className="w-12 h-12 text-white/90 mb-6 float-icon" />
-                <h4 className="text-xl font-bold mb-2">Get Hired Faster</h4>
-                <p className="text-sm text-white/90">Having a VIDA certificate on your resume helps you stand out and get the job you want.</p>
+            {/* Premium Add-ons Box */}
+            <div className="bento-item lg:col-span-3 bg-[linear-gradient(135deg,#DF8618_0%,#C86E04_100%)] rounded-[2rem] p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg hover:-translate-y-1 transition-transform duration-300">
+              <div className="text-white max-w-md">
+                <Star className="w-12 h-12 text-white/90 mb-6 float-icon" />
+                <h4 className="text-3xl font-bold mb-4">Premium Add-ons</h4>
+                <p className="text-white/90 text-lg">
+                  Take your career to the next level with our exclusive premium program upgrades.
+                </p>
               </div>
-
+              <div className="w-full md:w-auto bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl">
+                <ul className="space-y-4">
+                  {premiumAddons.map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-white">
+                      <PlusCircle className="w-5 h-5 text-white shrink-0" />
+                      <span className="font-semibold">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
           </div>
