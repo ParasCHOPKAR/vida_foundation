@@ -10,7 +10,6 @@ const languages = [
   { code: "mr", name: "Marathi", native: "मराठी" },
   { code: "ta", name: "Tamil", native: "தமிழ்" },
   { code: "te", name: "Telugu", native: "తెలుగు" },
-  // --- NEW CUSTOM LANGUAGES BELOW ---
   { code: "gu", name: "Gujarati", native: "ગુજરાતી" }, 
   { code: "bn", name: "Bengali", native: "বাংলা" },
   { code: "es", name: "Spanish", native: "Español" },
@@ -51,7 +50,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative notranslate" ref={dropdownRef}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-zinc-100 transition-colors duration-300 text-sm font-bold text-zinc-700"
