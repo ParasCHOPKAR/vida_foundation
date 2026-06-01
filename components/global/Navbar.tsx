@@ -76,7 +76,7 @@ const programCategories = [
 const aboutLinks = [
   { name: "Company Overview", href: "/about" },
   { name: "Board of Directors", href: "/board-of-directors" },
- 
+  { name: "Certificates", href: "/startup-certificate.pdf", isDownload: true }, // <-- Added PDF link
 ];
 
 export default function Navbar() {
@@ -183,7 +183,6 @@ export default function Navbar() {
               <Image 
                 src="/logo-update-removebg-preview.png" 
                 alt="VIDA Foundation Logo" 
-                
                 fill 
                 className="object-contain object-left"
                 priority
@@ -299,19 +298,37 @@ export default function Navbar() {
               
               <div 
                 ref={aboutDropdownRef}
-                className="absolute top-[80px] left-1/2 -translate-x-1/2 w-56 bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-zinc-200 opacity-0 hidden overflow-hidden"
+                className="absolute top-[80px] left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-zinc-200 opacity-0 hidden overflow-hidden"
                 style={{ transform: "translate(-50%, -10px)" }} 
               >
                 <div className="flex flex-col p-2">
-                  {aboutLinks.map((link, idx) => (
-                    <Link 
-                      key={idx} 
-                      href={link.href}
-                      className="px-4 py-3 text-sm font-bold text-zinc-600 hover:text-[#004b87] hover:bg-zinc-50 rounded-xl transition-colors normal-case tracking-normal"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+                  {aboutLinks.map((link, idx) => {
+                    // Check if it's the downloadable PDF link
+                    if (link.isDownload) {
+                      return (
+                        <a 
+                          key={idx} 
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-3 text-sm font-bold text-zinc-600 hover:text-[#004b87] hover:bg-zinc-50 rounded-xl transition-colors normal-case tracking-normal"
+                        >
+                          {link.name}
+                        </a>
+                      );
+                    }
+                    
+                    // Standard Next.js internal link
+                    return (
+                      <Link 
+                        key={idx} 
+                        href={link.href}
+                        className="px-4 py-3 text-sm font-bold text-zinc-600 hover:text-[#004b87] hover:bg-zinc-50 rounded-xl transition-colors normal-case tracking-normal"
+                      >
+                        {link.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -424,16 +441,35 @@ export default function Navbar() {
             <div className={`grid transition-all duration-300 ease-in-out ${isAboutMobileOpen ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"}`}>
               <div className="overflow-hidden">
                 <div className="flex flex-col gap-3 pl-2">
-                  {aboutLinks.map((link, idx) => (
-                    <Link 
-                      key={idx} 
-                      href={link.href}
-                      onClick={toggleMobileMenu}
-                      className="text-sm font-bold text-zinc-600 pl-4 py-2 border-l-2 border-zinc-200 hover:border-[#F28500] hover:text-[#004b87] transition-all"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
+                  {aboutLinks.map((link, idx) => {
+                    // Check if it's the downloadable PDF link
+                    if (link.isDownload) {
+                      return (
+                        <a 
+                          key={idx} 
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={toggleMobileMenu}
+                          className="text-sm font-bold text-zinc-600 pl-4 py-2 border-l-2 border-zinc-200 hover:border-[#F28500] hover:text-[#004b87] transition-all"
+                        >
+                          {link.name}
+                        </a>
+                      );
+                    }
+                    
+                    // Standard Next.js internal link
+                    return (
+                      <Link 
+                        key={idx} 
+                        href={link.href}
+                        onClick={toggleMobileMenu}
+                        className="text-sm font-bold text-zinc-600 pl-4 py-2 border-l-2 border-zinc-200 hover:border-[#F28500] hover:text-[#004b87] transition-all"
+                      >
+                        {link.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </div>
